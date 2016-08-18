@@ -17,11 +17,18 @@ public class RoutesFileServiceImpl implements RoutesFileService {
 	@Value("${busRouteDataFile.location}")
 	private String busRouteDataFileLocation;
 
-	public BusRoutes parseFile() throws InvalidFileException {
+	public BusRoutes buildRoutes() throws InvalidFileException {
 		List<String[]> numbers = readRawNumbers();
+		int routesNumber = Integer.parseInt(numbers.get(0)[0]);
+		numbers.remove(0);
+		if (routesNumber != numbers.size()) {
+			throw new InvalidFileException(" declared number of routes does not match actual number");
+		}
+
 		for (String[] route : numbers) {
 			System.out.println(route.length);
 		}
+
 		return null;
 	}
 
@@ -32,7 +39,7 @@ public class RoutesFileServiceImpl implements RoutesFileService {
 				numbers.add(line.split(" "));
 			});
 		} catch (IOException e) {
-			throw new InvalidFileException("fuckup :/ " + e.getMessage());
+			throw new InvalidFileException(e.getMessage());
 		}
 
 		return numbers;

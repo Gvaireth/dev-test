@@ -19,7 +19,7 @@ public class RoutesFileServiceImplTest {
 
 	@Test
 	public void test() {
-		service.parseFile();
+		service.buildRoutes();
 	}
 
 }

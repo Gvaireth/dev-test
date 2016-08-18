@@ -5,7 +5,6 @@ public class BusStation {
 	private int stationId;
 
 	public BusStation(int stationId) {
-		super();
 		this.stationId = stationId;
 	}
 

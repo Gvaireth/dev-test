@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class GoeuroBusController {
 
 	@Autowired
-	private RoutesFileService service;
+	private RoutesFileService fileService;
 
 	@RequestMapping(value = "/rest/provider/goeurobus/direct/{dep_sid}/{arr_sid}", method = RequestMethod.GET)
 	public RouteCheckResult checkRoute(@PathVariable int dep_sid, @PathVariable int arr_sid) {
 		System.out.println("controller");
+		fileService.buildRoutes();
 		RouteCheckResult checkResult = new RouteCheckResult();
 		checkResult.setDep_sid(dep_sid);
 		checkResult.setArr_sid(arr_sid);

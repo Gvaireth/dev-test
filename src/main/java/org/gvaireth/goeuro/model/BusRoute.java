@@ -1,10 +1,11 @@
 package org.gvaireth.goeuro.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BusRoute {
 	private int routeId;
-	private List<BusStation> stations;
+	private List<BusStation> stations = new ArrayList<>();
 
 	public int getRouteId() {
 		return routeId;
@@ -18,8 +19,8 @@ public class BusRoute {
 		return stations;
 	}
 
-	public void setStations(List<BusStation> stations) {
-		this.stations = stations;
+	public void add(BusStation station) {
+		stations.add(station);
 	}
 
 	public int size() {

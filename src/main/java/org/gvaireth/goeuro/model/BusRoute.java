@@ -1,11 +1,11 @@
 package org.gvaireth.goeuro.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class BusRoute {
 	private int routeId;
-	private List<BusStation> stations = new ArrayList<>();
+	private Set<BusStation> stations = new LinkedHashSet<>();
 
 	public int getRouteId() {
 		return routeId;
@@ -15,7 +15,7 @@ public class BusRoute {
 		this.routeId = routeId;
 	}
 
-	public List<BusStation> getStations() {
+	public Set<BusStation> getStations() {
 		return stations;
 	}
 
@@ -30,6 +30,34 @@ public class BusRoute {
 	@Override
 	public String toString() {
 		return "BusRoute [routeId=" + routeId + ", stations=" + stations + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + routeId;
+		result = prime * result + ((stations == null) ? 0 : stations.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BusRoute other = (BusRoute) obj;
+		if (routeId != other.routeId)
+			return false;
+		if (stations == null) {
+			if (other.stations != null)
+				return false;
+		} else if (!stations.equals(other.stations))
+			return false;
+		return true;
 	}
 
 }

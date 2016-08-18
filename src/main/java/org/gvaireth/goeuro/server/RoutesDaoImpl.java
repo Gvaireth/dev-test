@@ -13,7 +13,7 @@ import org.gvaireth.goeuro.model.BusStation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-@Service("RoutesFileService")
+@Service("RoutesDao")
 public class RoutesDaoImpl implements RoutesDao {
 
 	@Value("${busRouteDataFile.location}")

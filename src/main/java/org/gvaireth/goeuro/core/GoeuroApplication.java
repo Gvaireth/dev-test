@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
-@ComponentScan({ "org.gvaireth.goeuro.core", "org.gvaireth.goeuro.server" })
+@ComponentScan({ "org.gvaireth.goeuro.core", "org.gvaireth.goeuro.server", "org.gvaireth.goeuro.rest" })
 @EnableAutoConfiguration
 @Configuration
 public class GoeuroApplication {

@@ -17,19 +17,25 @@ public class RoutesFileServiceImpl implements RoutesFileService {
 	@Value("${busRouteDataFile.location}")
 	private String busRouteDataFileLocation;
 
-	public BusRoutes parseFile() {
+	public BusRoutes parseFile() throws InvalidFileException {
+		List<String[]> numbers = readRawNumbers();
+		for (String[] route : numbers) {
+			System.out.println(route.length);
+		}
+		return null;
+	}
+
+	protected List<String[]> readRawNumbers() throws InvalidFileException {
 		List<String[]> numbers = new ArrayList<>();
 		try (Stream<String> stream = Files.lines(Paths.get(busRouteDataFileLocation))) {
 			stream.forEach((line) -> {
 				numbers.add(line.split(" "));
 			});
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new InvalidFileException("fuckup :/ " + e.getMessage());
 		}
-		for (String[] route : numbers) {
-			System.out.println(route.length);
-		}
-		return null;
+
+		return numbers;
 	}
 
 }

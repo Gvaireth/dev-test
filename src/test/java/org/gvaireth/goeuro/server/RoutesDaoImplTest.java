@@ -12,10 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @SpringBootConfiguration
 @ComponentScan({ "org.gvaireth.goeuro.server" })
-public class RoutesFileServiceImplTest {
+public class RoutesDaoImplTest {
 
 	@Autowired
-	private RoutesFileService service;
+	private RoutesDao service;
 
 	@Test
 	public void test() {

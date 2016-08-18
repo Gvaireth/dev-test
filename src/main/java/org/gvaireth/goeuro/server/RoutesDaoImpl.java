@@ -7,29 +7,48 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.gvaireth.goeuro.model.BusRoute;
 import org.gvaireth.goeuro.model.BusRoutes;
+import org.gvaireth.goeuro.model.BusStation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service("RoutesFileService")
-public class RoutesFileServiceImpl implements RoutesFileService {
+public class RoutesDaoImpl implements RoutesDao {
 
 	@Value("${busRouteDataFile.location}")
 	private String busRouteDataFileLocation;
 
 	public BusRoutes buildRoutes() throws InvalidFileException {
-		List<String[]> numbers = readRawNumbers();
+		BusRoutes routes = new BusRoutes();
+		try {
+			List<String[]> numbers = readRawNumbers();
+			trimAndCheckNumberOfRoutes(numbers);
+			parseRawNumbers(routes, numbers);
+		} catch (NumberFormatException nfe) {
+			throw new InvalidFileException(nfe.getMessage());
+		}
+		return routes;
+	}
+
+	private void parseRawNumbers(BusRoutes routes, List<String[]> numbers) {
+		for (String[] rawRoute : numbers) {
+			BusRoute route = new BusRoute();
+			route.setRouteId(Integer.parseInt(rawRoute[0]));
+			for (int i = 1; i < rawRoute.length; i++) {
+				BusStation station = new BusStation(Integer.parseInt(rawRoute[i]));
+				route.add(station);
+			}
+			routes.add(route);
+		}
+	}
+
+	private void trimAndCheckNumberOfRoutes(List<String[]> numbers) {
 		int routesNumber = Integer.parseInt(numbers.get(0)[0]);
 		numbers.remove(0);
 		if (routesNumber != numbers.size()) {
 			throw new InvalidFileException(" declared number of routes does not match actual number");
 		}
-
-		for (String[] route : numbers) {
-			System.out.println(route.length);
-		}
-
-		return null;
 	}
 
 	protected List<String[]> readRawNumbers() throws InvalidFileException {

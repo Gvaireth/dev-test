@@ -80,6 +80,24 @@ public class RoutesDaoImplTest {
 
 	}
 
+	@Test(expected = InvalidFileException.class)
+	public void malformedFileTest() {
+		rawNumbers = new ArrayList<>();
+		rawNumbers.add(new String[] { "3" });
+		rawNumbers.add(new String[] { "11", "1", "2" });
+
+		service.parseRawNumbers(rawNumbers);
+	}
+
+	@Test(expected = InvalidFileException.class)
+	public void malformedFileTest2() {
+		rawNumbers = new ArrayList<>();
+		rawNumbers.add(new String[] { "1" });
+		rawNumbers.add(new String[] { "foo", "1", "2" });
+
+		service.parseRawNumbers(rawNumbers);
+	}
+
 	private List<String[]> buildRawNumbers() {
 		List<String[]> rawNumbers = new ArrayList<>();
 		rawNumbers.add(new String[] { "3" });

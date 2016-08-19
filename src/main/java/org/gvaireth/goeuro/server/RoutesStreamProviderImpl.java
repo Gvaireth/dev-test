@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import org.gvaireth.goeuro.core.GoeuroApplication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,10 @@ public class RoutesStreamProviderImpl implements RoutesStreamProvider {
 	public Stream<String> getStream() throws InvalidFileException {
 		Stream<String> stream = null;
 		try {
+			if (GoeuroApplication.FILE != null) {
+				busRouteDataFileLocation = GoeuroApplication.FILE;
+			}
+			System.out.println("file: " + busRouteDataFileLocation);
 			stream = Files.lines(Paths.get(busRouteDataFileLocation));
 		} catch (IOException e) {
 			throw new InvalidFileException(" opening stream problem:" + e.getMessage());

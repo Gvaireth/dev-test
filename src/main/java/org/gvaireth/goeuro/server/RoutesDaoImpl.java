@@ -20,7 +20,6 @@ public class RoutesDaoImpl implements RoutesDao {
 		BusRoutes routes = null;
 		try {
 			List<String[]> numbers = readRawNumbers();
-
 			routes = parseRawNumbers(numbers);
 		} catch (NumberFormatException nfe) {
 			throw new InvalidFileException(nfe.getMessage());
@@ -29,17 +28,21 @@ public class RoutesDaoImpl implements RoutesDao {
 		return routes;
 	}
 
-	BusRoutes parseRawNumbers(List<String[]> numbers) {
-		trimAndCheckNumberOfRoutes(numbers);
+	BusRoutes parseRawNumbers(List<String[]> numbers) throws InvalidFileException {
 		BusRoutes routes = new BusRoutes();
-		for (String[] rawRoute : numbers) {
-			BusRoute route = new BusRoute();
-			route.setRouteId(Integer.parseInt(rawRoute[0]));
-			for (int i = 1; i < rawRoute.length; i++) {
-				BusStation station = new BusStation(Integer.parseInt(rawRoute[i]));
-				route.add(station);
+		try {
+			trimAndCheckNumberOfRoutes(numbers);
+			for (String[] rawRoute : numbers) {
+				BusRoute route = new BusRoute();
+				route.setRouteId(Integer.parseInt(rawRoute[0]));
+				for (int i = 1; i < rawRoute.length; i++) {
+					BusStation station = new BusStation(Integer.parseInt(rawRoute[i]));
+					route.add(station);
+				}
+				routes.add(route);
 			}
-			routes.add(route);
+		} catch (NumberFormatException e) {
+			throw new InvalidFileException(e.getMessage());
 		}
 		System.out.println("numbers parsed");
 		return routes;

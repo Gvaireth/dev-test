@@ -12,8 +12,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GoeuroApplication {
 
+	public static String FILE = null;
+
 	public static void main(String[] args) {
+		FILE = args[0];// note: todo:fix this abomination
 		SpringApplication.run(GoeuroApplication.class, args);
-		System.out.println("hello world!");
+		System.out.println("app healthy!");
+		System.out.println("route file location: " + FILE);
 	}
 }

@@ -1,12 +1,12 @@
 package org.gvaireth.goeuro.model;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BusRoutes {
-	private Set<BusRoute> routes = new LinkedHashSet<>();
+	private List<BusRoute> routes = new ArrayList<>();
 
-	public Set<BusRoute> getRoutes() {
+	public List<BusRoute> getRoutes() {
 		return routes;
 	}
 
@@ -20,7 +20,7 @@ public class BusRoutes {
 
 	@Override
 	public String toString() {
-		return "BusRoutes [routes=" + routes + "]";
+		return " BusRoutes [routes=" + routes + "]";
 	}
 
 	@Override

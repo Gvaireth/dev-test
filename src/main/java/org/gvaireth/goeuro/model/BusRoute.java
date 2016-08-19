@@ -29,7 +29,7 @@ public class BusRoute {
 
 	@Override
 	public String toString() {
-		return "BusRoute [routeId=" + routeId + ", stations=" + stations + "]";
+		return "\nBusRoute [routeId=" + routeId + ", stations=" + stations + "]";
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class BusStation {
 
 	@Override
 	public String toString() {
-		return "BusStation [stationId=" + stationId + "]";
+		return "\n  BusStation [stationId=" + stationId + "]";
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 
 import org.gvaireth.goeuro.model.BusRoute;
 import org.gvaireth.goeuro.model.BusRoutes;
+import org.gvaireth.goeuro.model.BusStation;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,17 +51,41 @@ public class RoutesDaoImplTest {
 	@Test
 	public void routesIdsParsingTest() {
 		BusRoutes routes = service.parseRawNumbers(rawNumbers);
-		System.out.println(routes);
 		assertEquals(11, routes.getRoutes().get(0).getRouteId());
 		assertEquals(12, routes.getRoutes().get(1).getRouteId());
 		assertEquals(13, routes.getRoutes().get(2).getRouteId());
+	}
+
+	@Test
+	public void routeLengthParsingTest() {
+		BusRoutes routes = service.parseRawNumbers(rawNumbers);
+
+		BusRoute firstRoute = routes.getRoutes().get(0);
+		assertEquals(2, firstRoute.size());
+
+		BusRoute secondRoute = routes.getRoutes().get(1);
+		assertEquals(4, secondRoute.size());
+
+		BusRoute thirdRoute = routes.getRoutes().get(2);
+		assertEquals(3, thirdRoute.size());
+	}
+
+	@Test
+	public void stationIdParsingTest() {
+		BusRoutes routes = service.parseRawNumbers(rawNumbers);
+
+		BusRoute firstRoute = routes.getRoutes().get(0);
+		Iterator<BusStation> stationIterator = firstRoute.getStations().iterator();
+		assertEquals(1, stationIterator.next().getStationId());
+		assertEquals(2, stationIterator.next().getStationId());
+
 	}
 
 	private List<String[]> buildRawNumbers() {
 		List<String[]> rawNumbers = new ArrayList<>();
 		rawNumbers.add(new String[] { "3" });
 		rawNumbers.add(new String[] { "11", "1", "2" });
-		rawNumbers.add(new String[] { "12", "2", "3", "4" });
+		rawNumbers.add(new String[] { "12", "2", "3", "4", "0" });
 		rawNumbers.add(new String[] { "13", "4", "7", "2" });
 		return rawNumbers;
 	}

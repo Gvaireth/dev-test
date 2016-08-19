@@ -10,14 +10,16 @@ import java.util.stream.Stream;
 import org.gvaireth.goeuro.model.BusRoute;
 import org.gvaireth.goeuro.model.BusRoutes;
 import org.gvaireth.goeuro.model.BusStation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service("RoutesDao")
+@Component("RoutesDao")
 public class RoutesDaoImpl implements RoutesDao {
 
-	@Value("${busRouteDataFile.location}")
-	private String busRouteDataFileLocation;
+	@Autowired
+	private RoutesStreamProvider streamProvider;
 
 	public BusRoutes buildRoutes() throws InvalidFileException {
 		BusRoutes routes = new BusRoutes();
@@ -28,6 +30,7 @@ public class RoutesDaoImpl implements RoutesDao {
 		} catch (NumberFormatException nfe) {
 			throw new InvalidFileException(nfe.getMessage());
 		}
+		System.out.println("routes build");
 		return routes;
 	}
 
@@ -41,6 +44,7 @@ public class RoutesDaoImpl implements RoutesDao {
 			}
 			routes.add(route);
 		}
+		System.out.println("numbers parsed");
 	}
 
 	private void trimAndCheckNumberOfRoutes(List<String[]> numbers) {
@@ -53,14 +57,12 @@ public class RoutesDaoImpl implements RoutesDao {
 
 	protected List<String[]> readRawNumbers() throws InvalidFileException {
 		List<String[]> numbers = new ArrayList<>();
-		try (Stream<String> stream = Files.lines(Paths.get(busRouteDataFileLocation))) {
+		try (Stream<String> stream = streamProvider.getStream()) {
 			stream.forEach((line) -> {
 				numbers.add(line.split(" "));
 			});
-		} catch (IOException e) {
-			throw new InvalidFileException(e.getMessage());
 		}
-
+		System.out.println("file stream consumed");
 		return numbers;
 	}
 

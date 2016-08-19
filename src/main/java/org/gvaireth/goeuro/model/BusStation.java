@@ -1,5 +1,7 @@
 package org.gvaireth.goeuro.model;
 
+//note: this class is a bit over the top in current problem specification, it can be substituted by simple integer, however in normal system i would expect more fields to describe a bus station
+//perhaps if performance is critical factor, it can be simplified, however parse and search algorithms are so simple that it shouldnt be a problem even for reasonably huge data sets
 public class BusStation {
 
 	private int stationId;

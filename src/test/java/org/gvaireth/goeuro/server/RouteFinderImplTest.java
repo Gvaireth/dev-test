@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration
+@SpringBootConfiguration
 @ComponentScan({ "org.gvaireth.goeuro.server", "org.gvaireth.goeuro.core" })
 public class RouteFinderImplTest {
 
